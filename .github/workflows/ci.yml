@@ -1,7 +1,7 @@
 name: Build and push an Adelie Linux container image
 on:
   schedule:
-    - cron: '12 2 * * 3'
+    - cron: '57 * * * *'
 jobs:
   build:
     runs-on: ubuntu-latest
