@@ -1,0 +1,16 @@
+name: Build and push an Adelie Linux container image
+on:
+  shedule:
+    - cron: '5 2 * * 3'
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+
+      - uses: actions/checkout@v2
+
+      - name: login to container registry
+        run: podman login -u "$QUAY_USER" -p "$QUAY_TOKEN" quay.io
+
+      - name: do the thing
+        run: ./mk.sh --push
