@@ -17,7 +17,9 @@ jobs:
           QUAY_TOKEN: ${{ secrets.QUAY_TOKEN }}
 
       - name: install ripgrep
-        run: apt --no-install-recommends install ripgrep
+        run: sudo apt -yqq --no-install-recommends install ripgrep
+        env:
+          DEBIAN_FRONTEND: noninteractive
 
       - name: do the thing
         run: ./mk.sh --push
