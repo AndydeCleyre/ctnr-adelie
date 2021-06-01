@@ -1,5 +1,6 @@
 name: Build and push an Adelie Linux container image
 on:
+  push:
   schedule:
     - cron: '53 8 * * *'
 jobs:
