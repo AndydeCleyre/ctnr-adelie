@@ -1,10 +1,18 @@
 #!/bin/sh -ex
 
-netget () { if type wget >/dev/null 2>&1; then wget -nv -O - "$@"; else curl -L "$@"; fi }
 tmp=$(mktemp -d)
+netget () { if type wget >/dev/null 2>&1; then wget -nv -O - "$@"; else curl -L "$@"; fi }
+
+disturl='https://distfiles.adelielinux.org/adelie'
+platform='rootfs-mini'
+arch='x86_64'
 
 netget 'https://www.adelielinux.org/download/' >"$tmp/index.html"
-rootfs_url=$(grep -Eom 1 'https://distfiles\.adelielinux\.org/adelie/[^"]+/adelie-rootfs-mini-x86_64-[^"]+\.txz' "$tmp/index.html")
+version="$(rg -m 1 -r '$1' ' +version = "([^"]+).*' "$tmp/index.html")"
+release="$(rg -m 1 -r '$1' ' +release = "([^"]+).*' "$tmp/index.html")"
+
+rootfs_url="${disturl}/${version}/iso/${release}/adelie-${platform}-${arch}-${version}-${release}.txz"
+
 netget "$rootfs_url" >"$tmp/rootfs.txz"
 
 img=quay.io/andykluger/adelie

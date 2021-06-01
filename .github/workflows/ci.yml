@@ -15,5 +15,8 @@ jobs:
           QUAY_USER: ${{ secrets.QUAY_USER }}
           QUAY_TOKEN: ${{ secrets.QUAY_TOKEN }}
 
+      - name: install ripgrep
+        run: apt --no-install-recommends install ripgrep
+
       - name: do the thing
         run: ./mk.sh --push
